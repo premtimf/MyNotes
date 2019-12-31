@@ -8,6 +8,7 @@
     android:weightSum="100">
 
     <RelativeLayout
+        android:id="@+id/backContainer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="10"
@@ -24,6 +25,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/checkContainer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="10"
@@ -51,7 +53,7 @@
         android:textColor="@color/black"
         android:textSize="23sp"
         android:visibility="visible"/>
-    <TextView
+    <EditText
         android:id="@+id/note_edit_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
