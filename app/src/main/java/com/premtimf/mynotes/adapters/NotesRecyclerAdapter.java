@@ -1,5 +1,6 @@
 package com.premtimf.mynotes.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.premtimf.mynotes.R;
 import com.premtimf.mynotes.model.Note;
+import com.premtimf.mynotes.util.Utility;
 
 import java.util.ArrayList;
 
 public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerAdapter.ViewHolder> {
+    private static final String TAG = "NotesRecyclerAdapter";
 
     private ArrayList<Note> mNotes = new ArrayList<>();
     private OnNoteListener mOnNoteListener;
@@ -32,8 +35,21 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.timestamp.setText(mNotes.get(position).getTimestamp());
-        holder.title.setText(mNotes.get(position).getTitle());
+
+        try {
+
+            String month = mNotes.get(position).getTimestamp().substring(0, 2);
+            month = Utility.convertMonthNumber(month);
+            String year = mNotes.get(position).getTimestamp().substring(3);
+            String timestamp = month + " " + year;
+            holder.timestamp.setText(timestamp);
+            holder.title.setText(mNotes.get(position).getTitle());
+
+        } catch (NullPointerException e){
+            Log.d(TAG, "onBindViewHolder: NullpointerException: " + e.getMessage());
+        }
+
+
     }
 
     @Override
@@ -46,7 +62,7 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerAdap
         TextView title, timestamp;
         OnNoteListener onNoteListener;
 
-        public ViewHolder(@NonNull View itemView, OnNoteListener onNoteListener) {
+        private ViewHolder(@NonNull View itemView, OnNoteListener onNoteListener) {
             super(itemView);
             title = itemView.findViewById(R.id.note_title);
             timestamp = itemView.findViewById(R.id.note_timestamp);
